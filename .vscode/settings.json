@@ -97,5 +97,11 @@
 			"comments": false,
 			"strings": true
 		}
-	}
+	},
+	"workbench.colorCustomizations": {
+		"activityBar.background": "#033614",
+		"titleBar.activeBackground": "#054B1C",
+		"titleBar.activeForeground": "#F0FEF5"
+	},
+	"cmake.ignoreCMakeListsMissing": true
 }
