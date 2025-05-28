@@ -1,5 +1,6 @@
 import AVFoundation
 import Copus
+import CopusWrap
 
 extension Opus {
 	public class Encoder {
@@ -71,6 +72,27 @@ extension Opus.Encoder {
 			return try encode(input, to: output)
 		default:
 			throw Opus.Error.badArgument
+		}
+	}
+
+	public func setVBR(_ vbr: Bool) throws {
+		let error: Opus.Error
+		if vbr {
+			error = Opus.Error(opus_encoder_set_vbr(encoder, 1))
+		}
+		else {
+			error = Opus.Error(opus_encoder_set_vbr(encoder, 0))
+		}
+		if error != .ok {
+			throw error
+		}
+	}
+
+	public func setBitrate(_ bitrate: Int) throws {
+		try? self.setVBR(false)
+		let error: Opus.Error = Opus.Error(opus_encoder_set_bitrate(encoder, Int32(bitrate)))
+		if error != .ok {
+			throw error
 		}
 	}
 }

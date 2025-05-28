@@ -16,7 +16,7 @@ let package = Package(
 		),
 		.library(
 			name: "Opus",
-			targets: ["Opus", "Copus"]
+			targets: ["Opus", "Copus", "CopusWrap"]
 		),
 	],
 	dependencies: [],
@@ -217,12 +217,20 @@ let package = Package(
 				.define("OPUS_ARM_MAY_HAVE_NEON_INTR", to: "1"),
 				.define("OPUS_ARM_PRESUME_AARCH64_NEON_INTR", to: "1"),
 				.define("OPUS_ARM_PRESUME_DOTPROD", to: "1"),
-				.define("OPUS_ARM_PRESUME_NEON_INTR", to: "1")
+				.define("OPUS_ARM_PRESUME_NEON_INTR", to: "1"),
+				// src/extensions.c:176:51 Implicit conversion loses integer precision: 'long' to 'opus_int32' (aka 'int')
+				.unsafeFlags(["-O3", "-Wno-shorten-64-to-32"])
 			]
 		),
 		.target(
 			name: "Opus",
-			dependencies: ["Copus"]
+			dependencies: ["Copus", "CopusWrap"],
+		),
+		.target(
+			name: "CopusWrap",
+			dependencies: ["Copus"],
+			sources: ["encoder_ctl_wrapper.c"],
+			publicHeadersPath: "include",
 		),
 		.testTarget(
 			name: "OpusTests",
