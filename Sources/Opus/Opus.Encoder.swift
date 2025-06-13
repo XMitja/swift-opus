@@ -97,10 +97,10 @@ extension Opus.Encoder {
 	}
 }
 
-// MARK: private encode methods
+// MARK: pointer encode methods
 
 extension Opus.Encoder {
-	private func encode(_ input: UnsafeBufferPointer<Int16>, to output: UnsafeMutableBufferPointer<UInt8>) throws -> Int {
+	public func encode(_ input: UnsafeBufferPointer<Int16>, to output: UnsafeMutableBufferPointer<UInt8>) throws -> Int {
 		let encodedSize = opus_encode(
 			encoder,
 			input.baseAddress!,
@@ -114,7 +114,7 @@ extension Opus.Encoder {
 		return Int(encodedSize)
 	}
 
-	private func encode(_ input: UnsafeBufferPointer<Float32>, to output: UnsafeMutableBufferPointer<UInt8>) throws -> Int {
+	public func encode(_ input: UnsafeBufferPointer<Float32>, to output: UnsafeMutableBufferPointer<UInt8>) throws -> Int {
 		let encodedSize = opus_encode_float(
 			encoder,
 			input.baseAddress!,
