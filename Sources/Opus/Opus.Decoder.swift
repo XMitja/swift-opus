@@ -70,10 +70,10 @@ extension Opus.Decoder {
 	}
 }
 
-// MARK: Private decode methods
+// MARK: Public decode methods
 
 extension Opus.Decoder {
-	private func decode(_ input: UnsafeBufferPointer<UInt8>, to output: UnsafeMutableBufferPointer<Int16>) throws -> Int {
+	public func decode(_ input: UnsafeBufferPointer<UInt8>, to output: UnsafeMutableBufferPointer<Int16>) throws -> Int {
 		let decodedCount = opus_decode(
 			decoder,
 			input.baseAddress!,
@@ -88,7 +88,7 @@ extension Opus.Decoder {
 		return Int(decodedCount)
 	}
 
-	private func decode(_ input: UnsafeBufferPointer<UInt8>, to output: UnsafeMutableBufferPointer<Float32>) throws -> Int {
+	public func decode(_ input: UnsafeBufferPointer<UInt8>, to output: UnsafeMutableBufferPointer<Float32>) throws -> Int {
 		let decodedCount = opus_decode_float(
 			decoder,
 			input.baseAddress!,
